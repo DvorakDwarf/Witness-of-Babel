@@ -14,10 +14,11 @@ DATA_WORKERS = 0
 #We create an equal amount of images for noise one the spot
 #Bit of a clunky solution
 class RealSet(Dataset):
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, device, transform):
 
         self.all_paths = os.listdir(root_dir)
         self.root_dir = root_dir
+        self.device = device
         self.transform = transform
 
     def __len__(self):
@@ -27,19 +28,17 @@ class RealSet(Dataset):
         #Called on the part where we should have noise
         if idx >= len(self.all_paths):
             image = torch.randn(1, 64, 64)*255 #This is noise
-            label = torch.Tensor([0., 1.])
+            label = torch.Tensor([0., 1.]).to(self.device)
         else:
             image = Image.open(self.root_dir + "/" + self.all_paths[idx])
-            label = torch.Tensor([1., 0.])
+            image = self.transform(image).to(self.device)
+            label = torch.Tensor([1., 0.]).to(self.device)
 
-            if self.transform:
-                image = self.transform(image)
+        return image.to(self.device), label
 
-        return image, label
-
-def get_loaders(root_dir, transform=None): 
-    train_dataset = RealSet(root_dir + "/train", transform)
-    val_dataset = RealSet(root_dir + "/val", transform)
+def get_loaders(root_dir, device, transform): 
+    train_dataset = RealSet(root_dir + "/train", device, transform)
+    val_dataset = RealSet(root_dir + "/val", device, transform)
 
     train_loader = DataLoader(train_dataset,
     batch_size=BATCH_SIZE,

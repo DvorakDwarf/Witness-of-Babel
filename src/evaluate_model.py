@@ -1,9 +1,6 @@
 import torch
 import torchvision.transforms as transforms
 
-from PIL import Image
-from matplotlib import pyplot as plt
-
 import data 
 from architecture import Witness
 import training
@@ -26,10 +23,11 @@ transform = transforms.Compose([
     transforms.Grayscale()
     ])
 
-train_loader, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-imagenet/", 
+_, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-imagenet/", 
 transform=transform,
 device=device)
 
 model = Witness().to(device)
+model.load_state_dict(torch.load("data/Witness_of_Babel.pth"))
 
-training.loop(model, train_loader, val_loader)
+training.validate_accuracy(model, val_loader)

@@ -1,16 +1,38 @@
 import torch.optim as optim
+import torch.nn as nn
+import torch
 
 from tqdm import tqdm 
 import datetime
 
 LEARNING_RATE = 0.0001
-EPOCHS = 20
+EPOCHS = 5
 
 def validate_accuracy(model, val_loader):
-    pass
+    model.eval()
+        
+    for name, loader in [("val", val_loader)]:
+        correct = 0
+        total = 0
+
+        with torch.no_grad():
+            for imgs, labels in tqdm(loader, "Evaluating Performance"):
+                outputs = model(imgs)
+
+                # print("Out: " + str(outputs[0]))
+                # print("Truth: " + str(labels[0]) + "\n")
+
+                _, predicted = torch.max(outputs, dim=1)
+                _, truth = torch.max(labels, dim=1)
+                
+                total += labels.shape[0]
+                correct += int((predicted == truth).sum())
+
+        print("Accuracy {}: {:.3f}".format(name , correct / total))
+
 
 def loop(model, train_loader, val_loader):
-    optimizer = optim.SGD(solo_model.parameters(), lr=LEARNING_RATE, momentum=0.9)
+    optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=0.9)
     loss_fn = nn.CrossEntropyLoss() 
 
     print("Beginning training")
@@ -22,8 +44,6 @@ def loop(model, train_loader, val_loader):
         
         #Train
         for (imgs, labels) in tqdm(train_loader, desc="Training"):
-            print(imgs.get_device())
-
             model.train(True)
 
             out = model(imgs)
@@ -50,7 +70,7 @@ def loop(model, train_loader, val_loader):
         #Save the best model
         if epoch_val_loss < best_loss:
             best_loss = epoch_val_loss
-            torch.save(model.state_dict(), "data/" + f"MNIST_{target}.pth")
+            torch.save(model.state_dict(), "data/" + f"Witness_of_Babel.pth")
 
         # if epoch == 1 or epoch % 10 == 0:
         now = datetime.datetime.now()
