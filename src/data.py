@@ -1,9 +1,12 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-import PIL
+from PIL import Image
 import os
 import numpy as np
+
+BATCH_SIZE = 64
+DATA_WORKERS = 0
 
 #[1., 0.] = Real image
 #[0., 1.] = Noise
@@ -14,6 +17,7 @@ class RealSet(Dataset):
     def __init__(self, root_dir, transform=None):
 
         self.all_paths = os.listdir(root_dir)
+        self.root_dir = root_dir
         self.transform = transform
 
     def __len__(self):
@@ -22,13 +26,29 @@ class RealSet(Dataset):
     def __getitem__(self, idx):
         #Called on the part where we should have noise
         if idx >= len(self.all_paths):
-            image = torch.randn(64, 64, 3)*255 #This is noise
+            image = torch.randn(1, 64, 64)*255 #This is noise
             label = torch.Tensor([0., 1.])
         else:
-            image = PIL.imread(self.all_paths[idx])
+            image = Image.open(self.root_dir + "/" + self.all_paths[idx])
             label = torch.Tensor([1., 0.])
 
             if self.transform:
                 image = self.transform(image)
 
         return image, label
+
+def get_loaders(root_dir, transform=None): 
+    train_dataset = RealSet(root_dir + "/train", transform)
+    val_dataset = RealSet(root_dir + "/val", transform)
+
+    train_loader = DataLoader(train_dataset,
+    batch_size=BATCH_SIZE,
+    num_workers=DATA_WORKERS,
+    shuffle=True
+    )
+    val_loader = DataLoader(val_dataset,
+    batch_size=BATCH_SIZE,
+    num_workers=DATA_WORKERS
+    )
+
+    return train_loader, val_loader
