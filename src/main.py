@@ -4,7 +4,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 from matplotlib import pyplot as plt
 
-import data 
+import data
 from architecture import Witness
 import training
 
@@ -26,10 +26,15 @@ transform = transforms.Compose([
     transforms.Grayscale()
     ])
 
-train_loader, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-imagenet/", 
+train_loader, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-imagenet/",
 transform=transform,
 device=device)
 
-model = Witness().to(device)
+while True:
+    x = torch.randn(64, 64, 1)*255 #This is noise
+    plt.imshow(x)
+    plt.show()
 
-training.loop(model, train_loader, val_loader)
+# model = Witness().to(device)
+
+# training.loop(model, train_loader, val_loader)
