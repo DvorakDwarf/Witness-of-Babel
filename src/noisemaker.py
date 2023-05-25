@@ -1,81 +1,63 @@
+import torch
+
 import numpy as np
 from matplotlib import pyplot as plt
 from collections import namedtuple
-
-Target = namedtuple("target", "x y brightness")
 
 class NoiseGen:
     def __init__(self, log_path=None):
 
         self.log_path = log_path
     
-    #Multithread would be good
-    def generate_chunk(self):
-        pass
+    #What you should realistically use
+    def generate_chunk(self, chunk_size):
+        size = (chunk_size, 64, 64, 1)
+        noise_chunk = torch.rand(size)
 
-    def generate_noise(self):
-        noise = np.zeros((64, 64, 1))
+        return noise_chunk
 
-        brightness = 0
-        for x in range(0, 64):
-            print(brightness)
-            for y in range(0, 64):
-                noise[x, y, 0] = brightness
+    def generate_specific_chunk(self, chunk_size, start=0):
+        shape = (64, 64, 1)
+        noise = np.zeros(shape)
 
-            brightness += 1
+        flat_noise = noise.ravel()
+        self.initialize(flat_noise, start)
 
-        plt.imshow(noise)
-        plt.show()
+        chunk = np.empty((chunk_size, 64, 64, 1))
 
-    def iterate_noise(self):
-        noise = np.zeros((64, 64, 1))
-        target = Target(0, 0, 1)
-        affected = []
+        for chunk_idx in range(0, chunk_size):
+            self.step(flat_noise)
+            
+            new_img = flat_noise.reshape(shape)
+            chunk[chunk_idx] = new_img
 
-        noise[0, target.x, target.y] = target.brightness
-        
-        brightness = 0
-        while True:
-            for x in range(0, 64):
-                for y in range(0, 64):
-                    if x == target.x and y == target.y:
-                        continue
+        return chunk
 
-                    noise[x, y, 0] = brightness
+    def step(self, flat_noise):
+        for idx, pixel in enumerate(flat_noise):
+            if idx == len(flat_noise)-1 and pixel >= 255:
+                    #Congrats, you are at the end of canvas of babel !
+                    flat_noise = np.zeros(4096,)
+                    break
 
-            brightness += 1
+            #in case added number to already 255 pixel
+            if pixel > 255:
+                flat_noise[idx] = 1
+                flat_noise[idx+1] += 1
+            elif idx == 0:
+                flat_noise[idx] += 1
 
-            if brightness > 255:
-                brightness = 0
-                
-            plt.imshow(noise)
-            plt.show()
-
-    def better_iterate(self):
-        noise = np.zeros((64, 64, 1))
-        target = Target(0, 0, 1)
-        affected = []
-
-        noise[0, target.x, target.y] = target.brightness
-
-        for x in range(0, 64):
-            for y in range(0, 64):
-                if x == target.x and y == target.y:
-                    continue
-                else:
-                    affected.append([x, y])
-
-        for x, y in affected:
-            if noise[x, y, 0] == 255:
-                continue
-            else:
-                noise[x, y, 0] += 1
-
-        plt.imshow(noise)
-        plt.show()
-
+    #SLOOOOOOOOOOOOOOOOOOW, but completely accurate
+    def initialize(self, flat_noise, start):
+        for _ in range(0, start):
+            print(_)
+            self.step(flat_noise)
 
 
 noisegen = NoiseGen()
-noisegen.better_iterate()
+chunk = noisegen.generate_chunk(1000)
+
+plt.imshow(chunk[999])
+plt.show()
+
         

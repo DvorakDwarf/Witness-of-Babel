@@ -30,11 +30,16 @@ train_loader, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-im
 transform=transform,
 device=device)
 
-while True:
-    x = torch.randn(64, 64, 1)*255 #This is noise
-    plt.imshow(x)
-    plt.show()
+# for x, y in train_loader:
+#     x = torch.round(x*255)
+    
+#     print(x[0][0])
+#     print(x.shape)
 
-# model = Witness().to(device)
+#     x = x.cpu()
+#     plt.imshow(x[0].reshape(64, 64, 1))
+#     plt.show()
 
-# training.loop(model, train_loader, val_loader)
+model = Witness().to(device)
+
+training.loop(model, train_loader, val_loader)

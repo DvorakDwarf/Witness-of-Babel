@@ -27,7 +27,7 @@ class RealSet(Dataset):
     def __getitem__(self, idx):
         #Called on the part where we should have noise
         if idx >= len(self.all_paths):
-            image = torch.randn(1, 64, 64)*255 #This is noise
+            image = torch.rand((1, 64, 64)) #This is noise
             label = torch.Tensor([0., 1.]).to(self.device)
         else:
             image = Image.open(self.root_dir + "/" + self.all_paths[idx])

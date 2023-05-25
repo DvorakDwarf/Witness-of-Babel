@@ -6,7 +6,7 @@ from tqdm import tqdm
 import datetime
 
 LEARNING_RATE = 0.0001
-EPOCHS = 5
+EPOCHS = 30
 
 def validate_accuracy(model, val_loader):
     model.eval()
@@ -44,6 +44,8 @@ def loop(model, train_loader, val_loader):
         
         #Train
         for (imgs, labels) in tqdm(train_loader, desc="Training"):
+            imgs = torch.round(imgs*255)
+
             model.train(True)
 
             out = model(imgs)
@@ -56,8 +58,9 @@ def loop(model, train_loader, val_loader):
 
         #Validate
         for (val_imgs, val_labels) in tqdm(val_loader, desc="Validation"):
-            
-            model.eval()
+            val_imgs = torch.round(val_imgs*255)
+
+            model.train(False)
 
             val_out = model(val_imgs)
             val_loss = loss_fn(val_out, val_labels)
