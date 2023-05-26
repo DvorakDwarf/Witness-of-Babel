@@ -11,7 +11,7 @@ class NoiseGen:
     
     #What you should realistically use
     def generate_chunk(self, chunk_size):
-        size = (chunk_size, 64, 64, 1)
+        size = (chunk_size, 1, 64, 64)
         noise_chunk = torch.rand(size)
 
         return noise_chunk
@@ -23,7 +23,7 @@ class NoiseGen:
         flat_noise = noise.ravel()
         self.initialize(flat_noise, start)
 
-        chunk = np.empty((chunk_size, 64, 64, 1))
+        chunk = np.empty((chunk_size, 1, 64, 64))
 
         for chunk_idx in range(0, chunk_size):
             self.step(flat_noise)
@@ -54,10 +54,10 @@ class NoiseGen:
             self.step(flat_noise)
 
 
-noisegen = NoiseGen()
-chunk = noisegen.generate_chunk(1000)
+# noisegen = NoiseGen()
+# chunk = noisegen.generate_chunk(1000)
 
-plt.imshow(chunk[999])
-plt.show()
+# plt.imshow(chunk[999])
+# plt.show()
 
         

@@ -47,6 +47,7 @@ def loop(model, train_loader, val_loader):
             model.train(True)
 
             out = model(imgs)
+            print(imgs.shape)
             loss = loss_fn(out, labels)
             optimizer.zero_grad()
             loss.backward()
