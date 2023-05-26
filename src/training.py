@@ -32,8 +32,8 @@ def validate_accuracy(model, val_loader):
 
 
 def loop(model, train_loader, val_loader):
-    optimizer = optim.SGD(model.parameters(), lr=LEARNING_RATE, momentum=0.9)
-    loss_fn = nn.CrossEntropyLoss() 
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=0.1)
+    loss_fn = nn.BCELoss() 
 
     print("Beginning training")
 
@@ -44,8 +44,6 @@ def loop(model, train_loader, val_loader):
         
         #Train
         for (imgs, labels) in tqdm(train_loader, desc="Training"):
-            imgs = torch.round(imgs*255)
-
             model.train(True)
 
             out = model(imgs)
@@ -58,8 +56,6 @@ def loop(model, train_loader, val_loader):
 
         #Validate
         for (val_imgs, val_labels) in tqdm(val_loader, desc="Validation"):
-            val_imgs = torch.round(val_imgs*255)
-
             model.train(False)
 
             val_out = model(val_imgs)

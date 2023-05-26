@@ -8,6 +8,9 @@ import data
 from architecture import Witness
 import training
 
+#When training the model, I was spooked because it wouldn't overfit
+#Turns out there is so much data it can't overfit, 4head accident
+
 #Check what device to use
 use_cuda = torch.cuda.is_available()
 use_mps = torch.backends.mps.is_available()
@@ -31,7 +34,7 @@ transform=transform,
 device=device)
 
 # for x, y in train_loader:
-#     x = torch.round(x*255)
+#     # x = torch.round(x*255)
     
 #     print(x[0][0])
 #     print(x.shape)
