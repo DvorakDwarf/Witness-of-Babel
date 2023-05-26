@@ -31,7 +31,7 @@ def validate_accuracy(model, val_loader):
         print("Accuracy {}: {:.3f}".format(name , correct / total))
 
 
-def loop(model, train_loader, val_loader):
+def training_loop(model, train_loader, val_loader):
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=0.1)
     loss_fn = nn.BCELoss() 
 

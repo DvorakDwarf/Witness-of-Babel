@@ -4,9 +4,9 @@ import torchvision.transforms as transforms
 from PIL import Image
 from matplotlib import pyplot as plt
 
-import data
-from architecture import Witness
-import training
+from components.data import get_loaders
+from components.architecture import Witness
+from components.training import training_loop
 
 #When training the model, I was spooked because it wouldn't overfit
 #Turns out there is so much data it can't overfit, 4head accident
@@ -29,7 +29,7 @@ transform = transforms.Compose([
     transforms.Grayscale()
     ])
 
-train_loader, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-imagenet/",
+train_loader, val_loader = get_loaders("/home/titleless/m2/datasets/tiny-imagenet/",
 transform=transform,
 device=device)
 
@@ -45,4 +45,4 @@ device=device)
 
 model = Witness().to(device)
 
-training.loop(model, train_loader, val_loader)
+training_loop(model, train_loader, val_loader)
