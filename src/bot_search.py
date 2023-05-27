@@ -8,32 +8,9 @@ from dotenv import load_dotenv
 from matplotlib import pyplot as plt
 import time
 
-import noisemaker
-from architecture import Witness
-
-
-while True:
-    if count >= 100000:
-        print(time.time() - start)
-        break
-
-    chunk = noisegen.generate_chunk(1000).to(device)
-    outputs = witness(chunk)
-    
-    for idx, prediction in enumerate(outputs):
-        if prediction[0] > 0.3:
-            example = chunk[0].cpu()
-            plt.imshow(example.reshape(64, 64, 1))
-            plt.show()
-            
-            success = chunk[idx].cpu()
-            plt.imshow(success.reshape(64, 64, 1))
-            plt.show()
-    
-    count += 1000
-    # _, truth = torch.max(labels, dim=1)
-
-
+from components import noisemaker
+from components.architecture import Witness
+from components import logger
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='$', intents=intents)
@@ -53,34 +30,25 @@ print(f"Device is {device}")
 
 witness = Witness().to(device)
 witness.load_state_dict(torch.load("data/Witness_of_Babel.pth"))
-
 noisegen = noisemaker.NoiseGen()
-count = 0
 start = time.time()
 
-channel = bot.get_channel(os.getenv('CHANNEL_ID'))
+load_dotenv()
+
 @bot.event
 async def on_ready():
+    channel = bot.get_channel(int(os.getenv('CHANNEL_ID')))
+    user_id = os.getenv('USER_ID')
+    HQ = logger.Logger(channel, user_id)
+
     print("ready")
 
     while True:
         chunk = noisegen.generate_chunk(1000).to(device)
         outputs = witness(chunk)
         
-        for idx, prediction in enumerate(outputs):
-            if prediction[0] > 0.3:
-                example = chunk[0].cpu()
-                plt.imshow(example.reshape(64, 64, 1))
-                plt.show()
-                
-                success = chunk[idx].cpu()
-                plt.imshow(success.reshape(64, 64, 1))
-                plt.show()
-        
-        count += 1000
-    # _, truth = torch.max(labels, dim=1)
+        await HQ.log_anomalies(chunk, outputs)
 
-load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 bot.run(TOKEN)

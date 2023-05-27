@@ -1,6 +1,9 @@
 import torchvision
 
 import logging
+import os
+import sys
+import pickle
 import datetime
 import discord
 
@@ -14,15 +17,12 @@ class Logger:
         self.log_folder = f"logs/{now}"
         os.makedirs(self.log_folder)
 
-        with open("logs/count.pickle", "wb") as f:
-            f.write(pickle.dumps(self.count))
-
         with open("logs/count.pickle", "rb") as f:
             self.count = pickle.load(f)
 
         logging.basicConfig(
             level=logging.INFO,
-            filename=self.log_folder,
+            filename=f"{self.log_folder}/records.log",
             filemode="w",
             format="%(levelname)s - %(asctime)s\n%(message)s"
         )
@@ -36,7 +36,7 @@ class Logger:
 
         return image_path
 
-    def log(self, message, image_path):
+    async def log(self, message, image_path):
         logging.critical(message)
 
         with open(image_path, "rb") as fh:
@@ -44,7 +44,7 @@ class Logger:
 
         await self.channel.send(f"@{self.user_id} {message}", file=f)
 
-    def log_anomalies(self, chunk, outputs):
+    async def log_anomalies(self, chunk, outputs):
         for idx, prediction in enumerate(outputs):
             real_certainty = prediction[0]
             match real_certainty:
@@ -52,29 +52,42 @@ class Logger:
                     image_path = self.save_image(chunk[idx], "BINGO")
                     message = f"BINGO at {image_path}!"
 
-                    self.log(message, image_path)
+                    await self.log(message, image_path)
                     break
 
                 case real_certainty if real_certainty > 0.40:
                     image_path = self.save_image(chunk[idx], "40%")
                     message = f"Almost there at {image_path}!"
 
-                    self.log(message, image_path)
+                    await self.log(message, image_path)
                     break
 
                 case real_certainty if real_certainty > 0.30:
                     breaimage_path = self.save_image(chunk[idx], "30%")
                     message = f"30% at {image_path}!"
 
-                    self.log(message, image_path)
+                    await self.log(message, image_path)
                     break
 
                 case real_certainty if real_certainty > 0.25:
                     image_path = self.save_image(chunk[idx], "25%")
                     message = f"25% at {image_path}!"
 
-                    self.log(message, image_path)
+                    await self.log(message, image_path)
                     break
 
+                case real_certainty if real_certainty > 0.1:
+                    print("works")
+
+                    image_path = self.save_image(chunk[idx], "10%")
+                    message = f"10% at {image_path}!"
+
+                    await self.log(message, image_path)
+                    sys.exit()
+
         self.count += len(chunk)
-        print(len(chunk))
+
+        if self.count > 100000:
+            print(self.count)
+            with open("logs/count.pickle", "wb") as f:
+                f.write(pickle.dumps(self.count))
