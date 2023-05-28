@@ -51,36 +51,32 @@ class Logger:
             match real_certainty:
                 case real_certainty if real_certainty > 0.50:
                     image_path = self.save_image(chunk[idx], "BINGO")
-                    message = f"<@{self.user_id}> BINGO at image: {self.count:02x} !"
+                    message = f"<@{self.user_id}> BINGO at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
 
                     await self.log(message, image_path)
-                    break
 
-                case real_certainty if real_certainty > 0.40:
+                case real_certainty if real_certainty > 0.40 and real_certainty < 0.50:
                     image_path = self.save_image(chunk[idx], "40%")
-                    message = f"<@{self.user_id}> Almost there at image: {self.count:02x} !"
+                    message = f"<@{self.user_id}> Almost there at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
 
                     await self.log(message, image_path)
-                    break
 
-                case real_certainty if real_certainty > 0.30:
+                case real_certainty if real_certainty > 0.30 and real_certainty < 0.40:
                     breaimage_path = self.save_image(chunk[idx], "30%")
-                    message = f"30% at image: {self.count:02x} !"
+                    message = f"30% at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
 
                     await self.log(message, image_path)
-                    break
 
-                case real_certainty if real_certainty > 0.25:
+                case real_certainty if real_certainty > 0.25 and real_certainty < 0.30:
                     image_path = self.save_image(chunk[idx], "25%")
-                    message = f"25% at image: {self.count:02x} !"
+                    message = f"25% at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
 
                     await self.log(message, image_path)
-                    break
 
         self.count += len(chunk)
         self.buffer += len(chunk)
 
-        print(self.count)
+        # print(self.count)
         if self.buffer > 1000000:
             with open("logs/count.pickle", "wb") as f:
                 f.write(pickle.dumps(self.count))
