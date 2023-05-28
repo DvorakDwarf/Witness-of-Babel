@@ -15,7 +15,7 @@ You need to have python installed.
 1. `git clone https://github.com/DvorakDwarf/Witness-of-Babel.git`
 2. `cd Witness-of Babel`
 3. `python -m pip install -r requirements.txt`
-4. There is a regular search script and a search with a bot. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`
+4. There is a regular search script and a search with a discord bot for notifications. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`. `CHANNEL_ID` is for the channel you want the bot to post in
 5. If you wish to train your own model, use main.py
 6. `cd src`, `python search.py` or `python bot_search.py` 
 7. Wait
