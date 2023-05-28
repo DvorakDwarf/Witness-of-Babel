@@ -2,11 +2,12 @@ import torch.optim as optim
 import torch.nn as nn
 import torch
 
+from matplotlib import pyplot as plt
 from tqdm import tqdm 
 import datetime
 
-LEARNING_RATE = 0.0001
-EPOCHS = 30
+LEARNING_RATE = 0.00005
+EPOCHS = 2
 
 def validate_accuracy(model, val_loader):
     model.eval()
@@ -44,6 +45,10 @@ def training_loop(model, train_loader, val_loader, name):
         
         #Train
         for (imgs, labels) in tqdm(train_loader, desc="Training"):
+            # #Uncomment to visualize data
+            # plt.imshow(imgs[0].cpu().reshape(32, 32, 1))
+            # plt.show()
+
             model.train(True)
 
             out = model(imgs)

@@ -4,6 +4,7 @@ import discord
 from discord.ext import commands
 import requests
 import os
+from matplotlib import pyplot as plt
 from dotenv import load_dotenv
 import time
 import asyncio
@@ -14,6 +15,7 @@ from components import logger
 
 #Reduce number if GPU too small
 CHUNK_SIZE = 5000
+IMAGE_SIZE = 32
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='$', intents=intents)
@@ -33,7 +35,7 @@ print(f"Device is {device}")
 
 witness = SmallWitness().to(device)
 witness.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
-noisegen = noisemaker.NoiseGen()
+noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
 start = time.time()
 
 load_dotenv()

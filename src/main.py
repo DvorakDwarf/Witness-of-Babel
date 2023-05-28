@@ -9,6 +9,8 @@ from components.architecture import Witness
 from components.small_architecture import SmallWitness
 from components.training import training_loop
 
+IMAGE_SIZE = 32
+
 #When training the model, I was spooked because it wouldn't overfit
 #Turns out there is so much data it can't overfit, 4head accident
 
@@ -27,12 +29,14 @@ print(f"Device is {device}")
 
 transform = transforms.Compose([
     transforms.ToTensor(),
+    transforms.Resize(IMAGE_SIZE),
     transforms.Grayscale()
     ])
 
 train_loader, val_loader = get_loaders("/home/titleless/m2/datasets/tiny-imagenet/",
-transform=transform,
-device=device)
+    img_size=IMAGE_SIZE,
+    transform=transform,
+    device=device)
 
 # model = Witness().to(device)
 model = SmallWitness().to(device)

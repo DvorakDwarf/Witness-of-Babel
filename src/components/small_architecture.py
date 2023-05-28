@@ -12,7 +12,7 @@ class SmallWitness(nn.Module):
 
         self.flatten = nn.Flatten()
 
-        self.fc1 = nn.Linear(1568, 2)
+        self.fc1 = nn.Linear(288, 2)
         
     def forward(self, x):
         x = torch.relu(self.conv1(x))

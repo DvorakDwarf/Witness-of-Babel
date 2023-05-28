@@ -5,13 +5,13 @@ from matplotlib import pyplot as plt
 from collections import namedtuple
 
 class NoiseGen:
-    def __init__(self, log_path=None):
+    def __init__(self, img_size):
 
-        self.log_path = log_path
+        self.img_size = img_size
     
     #What you should realistically use
     def generate_chunk(self, chunk_size):
-        size = (chunk_size, 1, 64, 64)
+        size = (chunk_size, 1, self.img_size, self.img_size)
         noise_chunk = torch.rand(size)
 
         return noise_chunk

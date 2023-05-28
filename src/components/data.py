@@ -14,14 +14,14 @@ DATA_WORKERS = 0
 #We create an equal amount of images for noise one the spot
 #Bit of a clunky solution
 class RealSet(Dataset):
-    def __init__(self, root_dir, device, transform):
+    def __init__(self, root_dir, device, img_size, transform):
 
         self.all_paths = os.listdir(root_dir)
         self.root_dir = root_dir
         self.device = device
         self.transform = transform
 
-        self.noise = torch.rand((len(self.all_paths), 1, 64, 64))
+        self.noise = torch.rand((len(self.all_paths), 1, img_size, img_size))
 
     def __len__(self):
         return len(self.all_paths)*2
@@ -38,18 +38,18 @@ class RealSet(Dataset):
 
         return image.to(self.device), label
 
-def get_loaders(root_dir, device, transform): 
-    train_dataset = RealSet(root_dir + "/train", device, transform)
-    val_dataset = RealSet(root_dir + "/val", device, transform)
+def get_loaders(root_dir, device, img_size, transform): 
+    train_dataset = RealSet(root_dir + "/train", device, img_size, transform)
+    val_dataset = RealSet(root_dir + "/val", device, img_size, transform)
 
     train_loader = DataLoader(train_dataset,
-    batch_size=BATCH_SIZE,
-    num_workers=DATA_WORKERS,
-    shuffle=True
-    )
+        batch_size=BATCH_SIZE,
+        num_workers=DATA_WORKERS,
+        shuffle=True
+        )
     val_loader = DataLoader(val_dataset,
-    batch_size=BATCH_SIZE,
-    num_workers=DATA_WORKERS
-    )
+        batch_size=BATCH_SIZE,
+        num_workers=DATA_WORKERS
+        )
 
     return train_loader, val_loader
