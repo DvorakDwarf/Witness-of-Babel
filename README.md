@@ -12,7 +12,14 @@ This concept was adapted as a website at https://libraryofbabel.info/. If you ha
 
 ## How do I try my luck ? (**INSTALLATION**)
 You need to have python installed. 
-1. `git clone `
+1. `git clone https://github.com/DvorakDwarf/Witness-of-Babel.git`
+2. `cd Witness-of Babel`
+3. `python -m pip install -r requirements.txt`
+4. There is a regular search script and a search with a bot. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`
+5. If you wish to train your own model, use main.py
+6. `cd src`, `python search.py` or `python bot_search.py` 
+7. Wait
+8. Great Success
 
 ## Details 4 nerds
 
