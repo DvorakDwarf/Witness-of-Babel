@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 from matplotlib import pyplot as plt
 import time
+import asyncio
 
 from components import noisemaker
 from components.architecture import Witness
@@ -48,6 +49,7 @@ async def on_ready():
         outputs = witness(chunk)
         
         await HQ.log_anomalies(chunk, outputs)
+        await asyncio.sleep(0.0001) #Heartbeat stops without this
 
 TOKEN = os.getenv('TOKEN')
 
