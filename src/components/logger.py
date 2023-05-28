@@ -12,6 +12,7 @@ class Logger:
         self.channel = channel
         self.user_id = user_id
         self.count = 0
+        self.buffer = 0
 
         now=datetime.datetime.now()
         self.log_folder = f"logs/{now}"
@@ -77,8 +78,11 @@ class Logger:
                     break
 
         self.count += len(chunk)
+        self.buffer += len(chunk)
 
-        # print(self.count)
-        if self.count % 100000:
+        print(self.count)
+        if self.buffer > 1000000:
             with open("logs/count.pickle", "wb") as f:
                 f.write(pickle.dumps(self.count))
+
+            self.buffer = 0

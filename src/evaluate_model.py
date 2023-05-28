@@ -1,9 +1,10 @@
 import torch
 import torchvision.transforms as transforms
 
-import data 
-from architecture import Witness
-import training
+from components import data 
+from components.architecture import Witness
+from components.small_architecture import SmallWitness
+from components import training
 
 #Check what device to use
 use_cuda = torch.cuda.is_available()
@@ -27,7 +28,8 @@ _, val_loader = data.get_loaders("/home/titleless/m2/datasets/tiny-imagenet/",
 transform=transform,
 device=device)
 
-model = Witness().to(device)
-model.load_state_dict(torch.load("data/Witness_of_Babel.pth"))
+# model = Witness().to(device)
+model = SmallWitness().to(device)
+model.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
 
 training.validate_accuracy(model, val_loader)

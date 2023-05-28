@@ -5,13 +5,15 @@ from discord.ext import commands
 import requests
 import os
 from dotenv import load_dotenv
-from matplotlib import pyplot as plt
 import time
 import asyncio
 
 from components import noisemaker
-from components.architecture import Witness
+from components.small_architecture import SmallWitness
 from components import logger
+
+#Reduce number if GPU too small
+CHUNK_SIZE = 5000
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='$', intents=intents)
@@ -29,8 +31,8 @@ elif use_mps == True:
 device = torch.device(device)
 print(f"Device is {device}")
 
-witness = Witness().to(device)
-witness.load_state_dict(torch.load("data/Witness_of_Babel.pth"))
+witness = SmallWitness().to(device)
+witness.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
 noisegen = noisemaker.NoiseGen()
 start = time.time()
 
@@ -45,7 +47,7 @@ async def on_ready():
     print("ready")
 
     while True:
-        chunk = noisegen.generate_chunk(1000).to(device)
+        chunk = noisegen.generate_chunk(CHUNK_SIZE).to(device)
         outputs = witness(chunk)
         
         await HQ.log_anomalies(chunk, outputs)

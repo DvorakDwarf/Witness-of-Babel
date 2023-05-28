@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 
 from components.data import get_loaders
 from components.architecture import Witness
+from components.small_architecture import SmallWitness
 from components.training import training_loop
 
 #When training the model, I was spooked because it wouldn't overfit
@@ -33,16 +34,7 @@ train_loader, val_loader = get_loaders("/home/titleless/m2/datasets/tiny-imagene
 transform=transform,
 device=device)
 
-# for x, y in train_loader:
-#     # x = torch.round(x*255)
-    
-#     print(x[0][0])
-#     print(x.shape)
+# model = Witness().to(device)
+model = SmallWitness().to(device)
 
-#     x = x.cpu()
-#     plt.imshow(x[0].reshape(64, 64, 1))
-#     plt.show()
-
-model = Witness().to(device)
-
-training_loop(model, train_loader, val_loader)
+training_loop(model, train_loader, val_loader, name="Small_Witness_of_Babel")

@@ -31,7 +31,7 @@ def validate_accuracy(model, val_loader):
         print("Accuracy {}: {:.3f}".format(name , correct / total))
 
 
-def training_loop(model, train_loader, val_loader):
+def training_loop(model, train_loader, val_loader, name):
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=0.1)
     loss_fn = nn.BCELoss() 
 
@@ -47,7 +47,6 @@ def training_loop(model, train_loader, val_loader):
             model.train(True)
 
             out = model(imgs)
-            print(imgs.shape)
             loss = loss_fn(out, labels)
             optimizer.zero_grad()
             loss.backward()
@@ -70,7 +69,7 @@ def training_loop(model, train_loader, val_loader):
         #Save the best model
         if epoch_val_loss < best_loss:
             best_loss = epoch_val_loss
-            torch.save(model.state_dict(), "data/" + f"Witness_of_Babel.pth")
+            torch.save(model.state_dict(), "data/" + f"{name}.pth")
 
         # if epoch == 1 or epoch % 10 == 0:
         now = datetime.datetime.now()
