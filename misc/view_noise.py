@@ -1,3 +1,5 @@
+#Self-descriptive name. Used to view how my noise looks like
+
 import torch
 import torchvision
 from matplotlib import pyplot as plt

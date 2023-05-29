@@ -1,3 +1,5 @@
+#I wanted to make sure images going through .ravel() come back correct
+
 import numpy as np
 from PIL import Image
 
