@@ -20,7 +20,7 @@ This concept was adapted as a website at https://libraryofbabel.info/. If you ha
 ![image](https://github.com/DvorakDwarf/Witness-of-Babel/assets/96934612/6203093c-2dc6-448e-a35e-c740f8b9f7ad)
 
 ## How do I try my luck ? (**INSTALLATION**)
-You need to have python installed. 
+You need to have python installed. Having a GPU is preferrable but not completely necessary. Macbook GPUs work too
 1. `git clone https://github.com/DvorakDwarf/Witness-of-Babel.git`
 2. `cd Witness-of Babel`
 3. `python -m pip install -r requirements.txt`
