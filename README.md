@@ -1,7 +1,7 @@
 # Witness of Babel
 
 <p float="left">
-  <img src="/data/face?.png" width="100" />
+  <img src="data/face?.png" width="100" />
   <img src="data/amogus.png" width="100" /> 
 </p>
 
