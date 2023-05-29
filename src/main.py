@@ -1,3 +1,6 @@
+#The script to train the model
+#Main not a good name. Could not think of better one
+
 import torch
 import torchvision.transforms as transforms
 
@@ -5,12 +8,11 @@ from PIL import Image
 from matplotlib import pyplot as plt
 
 from components.data import get_loaders
-from components.architecture import Witness
-from components.small_architecture import SmallWitness
-from components.smaller_architecture import SmallerWitness
+from components import architecture
 from components.training import training_loop
 
 IMAGE_SIZE = 24
+CHECKPOINT_NAME = f"Medium_Witness_of_Babel_{IMAGE_SIZE}"
 
 #When training the model, I was spooked because it wouldn't overfit
 #Turns out there is so much data it can't overfit, 4head accident
@@ -34,13 +36,12 @@ transform = transforms.Compose([
     transforms.Grayscale()
     ])
 
-train_loader, val_loader = get_loaders("/home/titleless/m2/datasets/tiny-imagenet/",
-    img_size=IMAGE_SIZE,
+train_loader, val_loader = get_loaders(img_size=IMAGE_SIZE,
     transform=transform,
     device=device)
 
-# model = Witness().to(device)
-model = SmallWitness().to(device)
-# model = SmallerWitness().to(device)
+# model = architecture.large.LargeWitness().to(device)
+model = architecture.medium.MediumWitness().to(device)
+# model = architecture.small.SmallWitness().to(device)
 
-training_loop(model, train_loader, val_loader, name=f"Small_Witness_of_Babel_{IMAGE_SIZE}")
+training_loop(model, train_loader, val_loader, name=CHECKPOINT_NAME)

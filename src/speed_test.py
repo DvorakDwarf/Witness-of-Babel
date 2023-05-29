@@ -3,12 +3,11 @@
 import torch
 import torchvision.transforms as transforms
 
-from components import noisemaker 
-from components.architecture import Witness
-from components.small_architecture import SmallWitness
-
 import time
 from tqdm import tqdm
+
+from components import noisemaker 
+from components import architecture
 
 #Check what device to use
 use_cuda = torch.cuda.is_available()

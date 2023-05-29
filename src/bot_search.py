@@ -1,3 +1,7 @@
+#My primary search script
+#Relies on correct info in .env
+#Uses a discord bot for notifications
+
 import torch
 
 import discord
@@ -10,8 +14,7 @@ import time
 import asyncio
 
 from components import noisemaker
-from components.small_architecture import SmallWitness
-from components.smaller_architecture import SmallerWitness
+from components import architecture
 from components import logger
 
 #Reduce number if GPU too small
@@ -34,10 +37,9 @@ elif use_mps == True:
 device = torch.device(device)
 print(f"Device is {device}")
 
-witness = SmallWitness().to(device)
+witness = architecture.medium.MediumWitness().to(device)
 witness.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth"))
 noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
-start = time.time()
 
 load_dotenv()
 
@@ -58,8 +60,8 @@ async def on_ready():
         # plt.show()
         
         await HQ.log_anomalies(chunk, outputs)
-        await asyncio.sleep(0.0001) #Heartbeat stops without this
+        #Bot's heartbeat stops without this, disconnects
+        await asyncio.sleep(0.0001) 
 
 TOKEN = os.getenv('TOKEN')
-
 bot.run(TOKEN)

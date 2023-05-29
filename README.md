@@ -32,7 +32,7 @@ You need to have Python installed. Having a GPU is preferable but not completely
 9. Great Success
 
 ## Details 4 nerds
-The AI was trained on [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet) and the architecture is a painfully shallow CNN. The "Canvas" is a random tensor that predominantly returns white noise and the model looks through all of it and returns anything that looks sensible to it. On my hunk of junk PC, it zoomed through about 70000 64x64 images a second. There isn't really much more to it beyond a cool concept. If you want to be a stickler to the rules, the model is not going frame by frame along the canvas. If you want to put your money where your mouth is, on the other hand, there is functionality to go pixel by pixel and you can implement that if you have unlimited time on your hands.
+The AI was trained on [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet)(all images pooled into one folder) and the architecture is a painfully shallow CNN. The "Canvas" is a random tensor that predominantly returns white noise and the model looks through all of it and returns anything that looks sensible to it. On my hunk of junk PC, it zoomed through about 70000 64x64 images a second. There isn't really much more to it beyond a cool concept. If you want to be a stickler to the rules, the model is not going frame by frame along the canvas. If you want to put your money where your mouth is, on the other hand, there is functionality to go pixel by pixel and you can implement that if you have unlimited time on your hands.
 
 I tried out encapsulating different parts such as the dataset more by putting constants in them as well. Not worth it.
 

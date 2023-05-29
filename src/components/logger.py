@@ -17,9 +17,10 @@ LO_THRESHOLD = 0.31
 BUFFER_SIZE = 1000000
 
 class Logger:
-    def __init__(self, channel, user_id):
+    def __init__(self, channel, user_id, bot=True):
         self.channel = channel
         self.user_id = user_id
+        self.bot = bot
         self.count = 0
         self.buffer = 0
 
@@ -41,7 +42,6 @@ class Logger:
     def save_image(self, image_tensor, name):
         # now=datetime.datetime.now()
         image_path = f"{self.log_folder}/{name}_{self.count:02x}.png"
-
         torchvision.utils.save_image(image_tensor, image_path)
 
         return image_path
@@ -49,10 +49,11 @@ class Logger:
     async def log(self, message, image_path):
         logging.critical(message)
 
-        with open(image_path, "rb") as fh:
-            f = discord.File(fh, filename=image_path)
-
-        await self.channel.send(message, file=f)
+        if bot == True:
+            with open(image_path, "rb") as fh:
+                f = discord.File(fh, filename=image_path)
+                
+            await self.channel.send(message, file=f)
 
     async def log_anomalies(self, chunk, outputs):
         for idx, prediction in enumerate(outputs):
