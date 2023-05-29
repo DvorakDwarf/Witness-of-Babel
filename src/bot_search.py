@@ -11,11 +11,12 @@ import asyncio
 
 from components import noisemaker
 from components.small_architecture import SmallWitness
+from components.smaller_architecture import SmallerWitness
 from components import logger
 
 #Reduce number if GPU too small
 CHUNK_SIZE = 5000
-IMAGE_SIZE = 32
+IMAGE_SIZE = 24
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='$', intents=intents)
@@ -34,7 +35,7 @@ device = torch.device(device)
 print(f"Device is {device}")
 
 witness = SmallWitness().to(device)
-witness.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
+witness.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth"))
 noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
 start = time.time()
 
@@ -51,6 +52,10 @@ async def on_ready():
     while True:
         chunk = noisegen.generate_chunk(CHUNK_SIZE).to(device)
         outputs = witness(chunk)
+
+        # #Uncomment to visualize data
+        # plt.imshow(chunk[0].cpu().reshape(32, 32, 1))
+        # plt.show()
         
         await HQ.log_anomalies(chunk, outputs)
         await asyncio.sleep(0.0001) #Heartbeat stops without this

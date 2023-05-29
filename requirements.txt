@@ -1,0 +1,8 @@
+torch
+torchvision
+Pillow
+matplotlib
+tqdm
+python-dotenv
+discord
+numpy

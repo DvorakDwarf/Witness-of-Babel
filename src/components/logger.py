@@ -7,6 +7,9 @@ import pickle
 import datetime
 import discord
 
+HI_THRESHOLD = 0.5
+LO_THRESHOLD = 0.31
+
 class Logger:
     def __init__(self, channel, user_id):
         self.channel = channel
@@ -48,30 +51,18 @@ class Logger:
     async def log_anomalies(self, chunk, outputs):
         for idx, prediction in enumerate(outputs):
             real_certainty = prediction[0]
-            match real_certainty:
-                case real_certainty if real_certainty > 0.50:
-                    image_path = self.save_image(chunk[idx], "BINGO")
-                    message = f"<@{self.user_id}> BINGO at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
 
-                    await self.log(message, image_path)
+            if real_certainty >= HI_THRESHOLD:
+                image_path = self.save_image(chunk[idx], "BINGO")
+                message = f"<@{self.user_id}> BINGO at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
 
-                case real_certainty if real_certainty > 0.40 and real_certainty < 0.50:
-                    image_path = self.save_image(chunk[idx], "40%")
-                    message = f"<@{self.user_id}> Almost there at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
+                await self.log(message, image_path)
 
-                    await self.log(message, image_path)
+            elif real_certainty >= LO_THRESHOLD:
+                image_path = self.save_image(chunk[idx], "Mid")
+                message = f"Mid image: {self.count:02x} ({real_certainty*100:.2f}%)"
 
-                case real_certainty if real_certainty > 0.30 and real_certainty < 0.40:
-                    breaimage_path = self.save_image(chunk[idx], "30%")
-                    message = f"30% at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
-
-                    await self.log(message, image_path)
-
-                case real_certainty if real_certainty > 0.25 and real_certainty < 0.30:
-                    image_path = self.save_image(chunk[idx], "25%")
-                    message = f"25% at image: {self.count:02x} ! ({real_certainty*100:.2f}%)"
-
-                    await self.log(message, image_path)
+                await self.log(message, image_path)
 
         self.count += len(chunk)
         self.buffer += len(chunk)

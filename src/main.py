@@ -7,9 +7,10 @@ from matplotlib import pyplot as plt
 from components.data import get_loaders
 from components.architecture import Witness
 from components.small_architecture import SmallWitness
+from components.smaller_architecture import SmallerWitness
 from components.training import training_loop
 
-IMAGE_SIZE = 32
+IMAGE_SIZE = 24
 
 #When training the model, I was spooked because it wouldn't overfit
 #Turns out there is so much data it can't overfit, 4head accident
@@ -40,5 +41,6 @@ train_loader, val_loader = get_loaders("/home/titleless/m2/datasets/tiny-imagene
 
 # model = Witness().to(device)
 model = SmallWitness().to(device)
+# model = SmallerWitness().to(device)
 
-training_loop(model, train_loader, val_loader, name="Small_Witness_of_Babel")
+training_loop(model, train_loader, val_loader, name=f"Small_Witness_of_Babel_{IMAGE_SIZE}")
