@@ -1,3 +1,5 @@
+#Record all notable images and keep logs
+
 import torchvision
 
 import logging
@@ -7,8 +9,12 @@ import pickle
 import datetime
 import discord
 
+#Thresholds for when to log an image and when to ping
 HI_THRESHOLD = 0.5
 LO_THRESHOLD = 0.31
+
+#How many images to go through before saving to count.pickle
+BUFFER_SIZE = 1000000
 
 class Logger:
     def __init__(self, channel, user_id):
@@ -68,7 +74,7 @@ class Logger:
         self.buffer += len(chunk)
 
         # print(self.count)
-        if self.buffer > 1000000:
+        if self.buffer > BUFFER_SIZE:
             with open("logs/count.pickle", "wb") as f:
                 f.write(pickle.dumps(self.count))
 

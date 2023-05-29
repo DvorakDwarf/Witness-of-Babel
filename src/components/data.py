@@ -1,3 +1,5 @@
+#Code for the dataset as well as a function to create data loaders
+
 import torch
 from torch.utils.data import Dataset, DataLoader
 
@@ -23,6 +25,7 @@ class RealSet(Dataset):
 
         self.noise = torch.rand((len(self.all_paths), 1, img_size, img_size))
 
+    #Same number of noise as there are real images
     def __len__(self):
         return len(self.all_paths)*2
 

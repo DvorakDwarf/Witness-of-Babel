@@ -1,3 +1,5 @@
+#Contains the training loop and the way to validate the model
+
 import torch.optim as optim
 import torch.nn as nn
 import torch
@@ -33,7 +35,7 @@ def validate_accuracy(model, val_loader):
 
 
 def training_loop(model, train_loader, val_loader, name):
-    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=0.1)
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     loss_fn = nn.BCELoss() 
 
     print("Beginning training")
@@ -41,7 +43,7 @@ def training_loop(model, train_loader, val_loader, name):
     for epoch in range(1, EPOCHS + 1):
         total_loss = 0.0
         total_val_loss = 0.0
-        best_loss = 9999
+        best_loss = 9999 #Arbitrarily large for checkpoint to work
         
         #Train
         for (imgs, labels) in tqdm(train_loader, desc="Training"):
@@ -76,6 +78,5 @@ def training_loop(model, train_loader, val_loader, name):
             best_loss = epoch_val_loss
             torch.save(model.state_dict(), "data/" + f"{name}.pth")
 
-        # if epoch == 1 or epoch % 10 == 0:
         now = datetime.datetime.now()
         print(f"{now}\nEpoch {epoch}\ntr_loss {epoch_loss:.5}\nval_loss {epoch_val_loss:.5}\n")
