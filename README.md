@@ -4,6 +4,9 @@
 
 AKA the art critic of Babel if you are feeling funny. This is an AI made for the sole purpose of sifting through randomly generated images (Canvas of Babel) and trying to find meaning. It's a very small model and on my rtx 2060 it managed to zoom through about 70,000 images a second. Inspired by Solar Sands' [Canvas of Babel video](https://www.youtube.com/watch?v=awpVjv2-Ow0) It also explains the concept well if my description isn't enough for you. It is in no way a viable solution to generating images, but I find it very funny and interesting as a concept. If you are intrigued, you can try your luck at finding the next Van Gogh painting on the Canvas of Babel.
 
+If you get dream luck and find an image please send it to me, possibly to put up on this page as an example \ 
+Amogus will not be accepted
+
 ## Why make this and what's a Babel ? (**I SWEAR THIS IS INTERESTING**)
 
 The concept originates from a short story written by Jorge Luis Borges titled "The Library of Babel". The book is about a hypothetical library containing 410 page books filled with every single possible combination of characters(shush, I know it's less). This means that most of the books are complete gibberish. However, it also means that in the endless shelves one can find a vivid description of their future wedding, a transcript of their every dream, and a hitlist on everybody on Earth that likes pineapple on Pizza (This README is there too, Hi Babel librarian !). 
@@ -22,5 +25,12 @@ You need to have python installed.
 8. Great Success
 
 ## Details 4 nerds
+The AI was trained on [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet) and the architecture is a painfully shallow CNN. The "Canvas" is a random tensor which predominantly returns white noise and the model looks through all of it and returns anything that looks sensible to it. There isn't really much more to it beyond a cool concept. If you want to be a stickler to the rules the model is not going frame by frame along the canvas. If you want to put your money where your mouth is, on the other hand, there is functionality to go pixel by pixel and you can do that if you have unlimited time on your hands.
 
 ## Final Comments
+
+It's not against anybody's TOS this time, so that's nice. \
+Shoutout to Discord for making projects very easy and not yet complaining over stuff I did \
+
+Do what you want with the code, but credit would be much appreciated and if you have any trouble with the Witness, please contact me over discord.
+
