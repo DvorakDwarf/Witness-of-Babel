@@ -25,11 +25,12 @@ You need to have Python installed. Having a GPU is preferable but not completely
 2. `cd Witness-of Babel`
 3. `python -m pip install -r requirements.txt`
 4. There is a regular search script and a search with a discord bot for notifications. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`. `CHANNEL_ID` is for the channel you want the bot to post in
-5. If you wish to train your own model, use main.py
-6. `cd src`, `python search.py` or `python bot_search.py` 
-7. Wait
-8. Collect cool images in logs or discord
-9. Great Success
+5. Go to `data.py` and set the root_dir variable to the path your dataset is in
+6. If you wish to train your own model, use main.py
+7. `cd src`, `python search.py` or `python bot_search.py` 
+8. Wait
+9. Collect cool images in logs or discord
+10. Great Success
 
 ## Details 4 nerds
 The AI was trained on [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet)(all images pooled into one folder) and the architecture is a painfully shallow CNN. The "Canvas" is a random tensor that predominantly returns white noise and the model looks through all of it and returns anything that looks sensible to it. On my hunk of junk PC, it zoomed through about 70000 64x64 images a second. There isn't really much more to it beyond a cool concept. If you want to be a stickler to the rules, the model is not going frame by frame along the canvas. If you want to put your money where your mouth is, on the other hand, there is functionality to go pixel by pixel and you can implement that if you have unlimited time on your hands.
