@@ -31,7 +31,8 @@ The AI was trained on [tiny-imagenet](https://www.kaggle.com/datasets/akash2shar
 ## Final Comments
 
 It's not against anybody's TOS this time, so that's nice. \
-Shoutout to Discord for making projects very easy and not yet getting angry over stuff I did 
+Shoutout to Discord for making projects very easy and not yet getting angry over stuff I did \
+I implore you to try to improve on this. There are a bunch of ways of going about this.
 
 Do what you want with the code, but credit would be much appreciated and if you have any trouble with the Witness, please contact me over discord.
 
