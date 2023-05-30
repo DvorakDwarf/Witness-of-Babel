@@ -9,7 +9,7 @@ import numpy as np
 
 BATCH_SIZE = 64
 DATA_WORKERS = 0
-root_dir = "/home/titleless/m2/datasets/tiny-imagenet/"
+DATASET_DIR = "/home/titleless/m2/datasets/tiny-imagenet/"
 
 #[1., 0.] = Real image
 #[0., 1.] = Noise
@@ -17,7 +17,7 @@ root_dir = "/home/titleless/m2/datasets/tiny-imagenet/"
 #We create an equal amount of images for noise one the spot
 #Bit of a clunky solution
 class RealSet(Dataset):
-    def __init__(self, device, img_size, transform):
+    def __init__(self, root_dir, device, img_size, transform):
 
         self.all_paths = os.listdir(root_dir)
         self.root_dir = root_dir
@@ -43,8 +43,8 @@ class RealSet(Dataset):
         return image.to(self.device), label
 
 def get_loaders(device, img_size, transform): 
-    train_dataset = RealSet(root_dir + "/train", device, img_size, transform)
-    val_dataset = RealSet(root_dir + "/val", device, img_size, transform)
+    train_dataset = RealSet(DATASET_DIR + "/train", device, img_size, transform)
+    val_dataset = RealSet(DATASET_DIR + "/val", device, img_size, transform)
 
     train_loader = DataLoader(train_dataset,
         batch_size=BATCH_SIZE,

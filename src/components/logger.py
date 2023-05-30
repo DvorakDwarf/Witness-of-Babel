@@ -17,7 +17,7 @@ LO_THRESHOLD = 0.31
 BUFFER_SIZE = 1000000
 
 class Logger:
-    def __init__(self, channel, user_id, bot=True):
+    def __init__(self, channel=None, user_id=None, bot=True):
         self.channel = channel
         self.user_id = user_id
         self.bot = bot
@@ -49,10 +49,10 @@ class Logger:
     async def log(self, message, image_path):
         logging.critical(message)
 
-        if bot == True:
+        if self.bot == True:
             with open(image_path, "rb") as fh:
                 f = discord.File(fh, filename=image_path)
-                
+
             await self.channel.send(message, file=f)
 
     async def log_anomalies(self, chunk, outputs):

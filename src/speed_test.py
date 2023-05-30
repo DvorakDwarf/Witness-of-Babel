@@ -7,7 +7,13 @@ import time
 from tqdm import tqdm
 
 from components import noisemaker 
-from components import architecture
+from components.architecture import large
+from components.architecture import medium
+from components.architecture import small
+
+#Reduce number if GPU too small
+CHUNK_SIZE = 5000
+IMAGE_SIZE = 24
 
 #Check what device to use
 use_cuda = torch.cuda.is_available()
@@ -24,23 +30,25 @@ print(f"Device is {device}")
 
 transform = transforms.Compose([
     transforms.ToTensor(),
+    transforms.Resize(IMAGE_SIZE),
     transforms.Grayscale()
     ])
 
-model = Witness().to(device)
-small_model = SmallWitness().to(device)
-model.load_state_dict(torch.load("data/Witness_of_Babel.pth"))
-small_model.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
+model1 = medium.MediumWitness().to(device)
+model2 = small.SmallWitness().to(device)
 
-models = [("Witness", model), ("Small Witness", small_model)]
+model1.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth"))
+model2.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth"))
 
-noisegen = noisemaker.NoiseGen()
+models = [("Witness", model1), ("Small Witness", model2)]
+noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
 for arch in models:
     start = time.time()
     for _ in tqdm(range(0, 1000)):
-        chunk = noisegen.generate_chunk(1000).to(device)
+        chunk = noisegen.generate_chunk(CHUNK_SIZE).to(device)
         outputs = arch[1](chunk)
 
+        # Simulate the stop for heartbeat at bot_search
         time.sleep(0.0001)
 
     elapsed = time.time() - start

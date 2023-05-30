@@ -3,7 +3,7 @@
 import numpy as np
 from PIL import Image
 
-img = Image.open('data/index.png').convert('RGB')
+img = Image.open('data/sample.png').convert('RGB')
 arr = np.array(img)
 
 # record the original shape

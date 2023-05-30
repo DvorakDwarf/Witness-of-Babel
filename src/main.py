@@ -8,7 +8,9 @@ from PIL import Image
 from matplotlib import pyplot as plt
 
 from components.data import get_loaders
-from components import architecture
+from components.architecture import large
+from components.architecture import medium
+from components.architecture import small
 from components.training import training_loop
 
 IMAGE_SIZE = 24
@@ -40,8 +42,8 @@ train_loader, val_loader = get_loaders(img_size=IMAGE_SIZE,
     transform=transform,
     device=device)
 
-# model = architecture.large.LargeWitness().to(device)
-model = architecture.medium.MediumWitness().to(device)
-# model = architecture.small.SmallWitness().to(device)
+# model = large.LargeWitness().to(device)
+model = medium.MediumWitness().to(device)
+# model = small.SmallWitness().to(device)
 
 training_loop(model, train_loader, val_loader, name=CHECKPOINT_NAME)

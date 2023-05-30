@@ -14,7 +14,9 @@ import time
 import asyncio
 
 from components import noisemaker
-from components import architecture
+from components.architecture import large
+from components.architecture import medium
+from components.architecture import small
 from components import logger
 
 #Reduce number if GPU too small
@@ -37,8 +39,8 @@ elif use_mps == True:
 device = torch.device(device)
 print(f"Device is {device}")
 
-witness = architecture.medium.MediumWitness().to(device)
-witness.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth"))
+witness = medium.MediumWitness().to(device)
+witness.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth"))
 noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
 
 load_dotenv()

@@ -2,10 +2,12 @@ import torch
 import torchvision.transforms as transforms
 
 from components import data 
-from components import architecture
+from components.architecture import large
+from components.architecture import medium
+from components.architecture import small
 from components import training
 
-IMAGE_SIZE = 16
+IMAGE_SIZE = 24
 
 #Check what device to use
 use_cuda = torch.cuda.is_available()
@@ -30,7 +32,7 @@ _, val_loader = data.get_loaders(transform=transform,
     img_size=IMAGE_SIZE,
     device=device)
 
-model = architecture.medium.MediumWitness().to(device)
+model = medium.MediumWitness().to(device)
 model.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
 
 training.validate_accuracy(model, val_loader)

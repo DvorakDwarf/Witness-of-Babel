@@ -8,17 +8,17 @@ import requests
 import os
 from matplotlib import pyplot as plt
 import time
+import asyncio
 
 from components import noisemaker
-from components import architecture
+from components.architecture import large
+from components.architecture import medium
+from components.architecture import small
 from components import logger
 
 #Reduce number if GPU too small
 CHUNK_SIZE = 5000
 IMAGE_SIZE = 24
-
-intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='$', intents=intents)
 
 #Check what device to use
 use_cuda = torch.cuda.is_available()
@@ -33,20 +33,23 @@ elif use_mps == True:
 device = torch.device(device)
 print(f"Device is {device}")
 
-witness = architecture.medium.MediumWitness().to(device)
-witness.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth"))
+witness = medium.MediumWitness().to(device)
+witness.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth"))
 noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
+HQ = logger.Logger(bot=False)
 
-while True:
-    print("ready")
-
+async def search():
     while True:
-        chunk = noisegen.generate_chunk(CHUNK_SIZE).to(device)
-        outputs = witness(chunk)
+        print("ready")
 
-        # #Uncomment to visualize data
-        # plt.imshow(chunk[0].cpu().reshape(32, 32, 1))
-        # plt.show()
-        
-        await HQ.log_anomalies(chunk, outputs, bot=False)
+        while True:
+            chunk = noisegen.generate_chunk(CHUNK_SIZE).to(device)
+            outputs = witness(chunk)
 
+            # #Uncomment to visualize data
+            # plt.imshow(chunk[0].cpu().reshape(32, 32, 1))
+            # plt.show()
+            
+            await HQ.log_anomalies(chunk, outputs)
+
+asyncio.run(search())
