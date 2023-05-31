@@ -42,7 +42,8 @@ I tried out encapsulating different parts such as the dataset more by putting co
 
 It's not against anybody's TOS this time, so that's nice. \
 Shoutout to Discord for making projects easier and not yet getting angry over stuff I did \
-I implore you to try to improve on this. There are a bunch of ways of going about this.
+I implore you to try to improve on this. There are a bunch of ways of going about this. \
+There are a few extra examples of images in the `examples` folder
 
 Do what you want with the code, but credit would be much appreciated and if you have any trouble with the Witness, please contact me over Discord.
 
