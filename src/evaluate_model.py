@@ -33,6 +33,6 @@ _, val_loader = data.get_loaders(transform=transform,
     device=device)
 
 model = medium.MediumWitness().to(device)
-model.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth"))
+model.load_state_dict(torch.load("data/Small_Witness_of_Babel.pth", map_location=device))
 
 training.validate_accuracy(model, val_loader)

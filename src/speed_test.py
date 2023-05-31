@@ -37,8 +37,8 @@ transform = transforms.Compose([
 model1 = medium.MediumWitness().to(device)
 model2 = small.SmallWitness().to(device)
 
-model1.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth"))
-model2.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth"))
+model1.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth", map_location=device))
+model2.load_state_dict(torch.load("data/Small_Witness_of_Babel_24.pth", map_location=device))
 
 models = [("Witness", model1), ("Small Witness", model2)]
 noisegen = noisemaker.NoiseGen(IMAGE_SIZE)

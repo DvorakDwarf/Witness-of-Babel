@@ -40,7 +40,7 @@ device = torch.device(device)
 print(f"Device is {device}")
 
 witness = medium.MediumWitness().to(device)
-witness.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth"))
+witness.load_state_dict(torch.load("data/Medium_Witness_of_Babel_24.pth", map_location=device))
 noisegen = noisemaker.NoiseGen(IMAGE_SIZE)
 
 load_dotenv()

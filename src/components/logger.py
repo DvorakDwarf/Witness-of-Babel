@@ -28,8 +28,12 @@ class Logger:
         self.log_folder = f"logs/{now}"
         os.makedirs(self.log_folder)
 
-        with open("logs/count.pickle", "rb") as f:
-            self.count = pickle.load(f)
+        try:
+            with open("logs/count.pickle", "rb") as f:
+                self.count = pickle.load(f)
+        except:
+            with open("logs/count.pickle", "wb") as f:
+                f.write(pickle.dumps(self.count))
 
         logging.basicConfig(
             level=logging.CRITICAL,
