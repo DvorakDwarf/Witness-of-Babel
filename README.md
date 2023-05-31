@@ -3,6 +3,7 @@
 <p float="left">
   <img src="data/allegedly_a_face.png" width="300" />
   <img src="data/amogus.png" width="300" /> 
+  <img src="maybe_dog.png" width="300">
 </p>
 
 <a href="https://www.buymeacoffee.com/HistidineDwarf" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
