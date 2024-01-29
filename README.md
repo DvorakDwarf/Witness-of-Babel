@@ -26,7 +26,7 @@ You need to have Python [tiny-imagenet](https://www.kaggle.com/datasets/akash2sh
 2. `cd Witness-of Babel`
 3. `python -m pip install -r requirements.txt`
 4. There is a regular search script and a search with a discord bot for notifications. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`. `CHANNEL_ID` is for the channel you want the bot to post in
-5. Go to `data.py` and set the root_dir variable to the path your dataset is in
+5. Go to `src/components/data.py` and set the root_dir variable to the path your dataset is in
 6. If you wish to train your own model, use main.py
 7. `cd src`, `python search.py` or `python bot_search.py` 
 8. Wait
