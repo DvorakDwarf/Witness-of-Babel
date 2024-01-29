@@ -21,14 +21,14 @@ This concept was adapted as a website at https://libraryofbabel.info/. If you ha
 ![image](https://github.com/DvorakDwarf/Witness-of-Babel/assets/96934612/6203093c-2dc6-448e-a35e-c740f8b9f7ad)
 
 ## How do I try my luck ? (**INSTALLATION**)
-You need to have Python [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet)(pool all training images in one folder) installed. Having a GPU is preferable but not completely necessary. Macbook GPUs work too
+You need to have Python and [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet) installed. Having a GPU is preferable but not completely necessary. Macbook GPUs work too
 1. `git clone https://github.com/DvorakDwarf/Witness-of-Babel.git`
 2. `cd Witness-of Babel`
 3. `python -m pip install -r requirements.txt`
 4. There is a regular search script and a search with a discord bot for notifications. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`. `CHANNEL_ID` is for the channel you want the bot to post in
-5. Go to `src/components/data.py` and set the root_dir variable to the path your dataset is in
-6. If you wish to train your own model, use main.py
-7. `cd src`, `python search.py` or `python bot_search.py` 
+5. Go to `src/components/data.py` and set the root_dir variable to the path your dataset is in. Point it to the extracted contents of tiny-imagenet
+6. If you wish to train your own model and not the one already in the repo, use `main.py`
+7. `cd src`, then run `python search.py` or `python bot_search.py` depending on whether you use a bot or not
 8. Wait
 9. Collect cool images in logs or discord
 10. Great Success
