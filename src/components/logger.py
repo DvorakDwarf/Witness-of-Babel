@@ -11,7 +11,7 @@ import discord
 
 #Thresholds for when to log an image and when to ping
 HI_THRESHOLD = 0.45
-LO_THRESHOLD = 0.10
+LO_THRESHOLD = 0.3
 
 #How many images to go through before saving to count.pickle
 BUFFER_SIZE = 1000000
