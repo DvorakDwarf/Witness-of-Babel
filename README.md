@@ -27,11 +27,12 @@ You need to have Python and [tiny-imagenet](https://www.kaggle.com/datasets/akas
 3. `python -m pip install -r requirements.txt`
 4. There is a regular search script and a search with a discord bot for notifications. If you will use the bot, create a .env file in the src directory. You need to set `CHANNEL_ID`, `USER_ID`, and `TOKEN`. `CHANNEL_ID` is for the channel you want the bot to post in
 5. Go to `src/components/data.py` and set the root_dir variable to the path your dataset is in. Point it to the extracted contents of tiny-imagenet
-6. If you wish to train your own model and not the one already in the repo, use `main.py`
-7. `cd src`, then run `python search.py` or `python bot_search.py` depending on whether you use a bot or not
-8. Wait
-9. Collect cool images in logs or discord
-10. Great Success
+6. If you want to change the threshold for an image being reported, go to the constants in `src/components/logger.py`
+7. If you wish to train your own model and not the one already in the repo, use `main.py`
+8. `cd src`, then run `python search.py` or `python bot_search.py` depending on whether you use a bot or not
+9. Wait
+10. Collect cool images in logs or discord
+11. Great Success
 
 ## Details 4 nerds
 The AI was trained on [tiny-imagenet](https://www.kaggle.com/datasets/akash2sharma/tiny-imagenet) and the architecture is a painfully shallow CNN. The "Canvas" is a random tensor that predominantly returns white noise and the model looks through all of it and returns anything that looks sensible to it. On my hunk of junk PC, it zoomed through about 459137 24x24 images a second. There isn't really much more to it beyond a cool concept. If you want to be a stickler to the rules, the model is not going frame by frame along the canvas. If you want to put your money where your mouth is, on the other hand, there is functionality to go pixel by pixel and you can implement that if you have unlimited time on your hands.
