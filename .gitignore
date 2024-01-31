@@ -1,6 +1,7 @@
 /data/Witness_of_Babel.pth
 /logs/*
 !/logs/hi.txt
+/tiny-imagenet-200
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

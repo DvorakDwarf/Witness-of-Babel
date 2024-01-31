@@ -10,8 +10,8 @@ import datetime
 import discord
 
 #Thresholds for when to log an image and when to ping
-HI_THRESHOLD = 0.5
-LO_THRESHOLD = 0.31
+HI_THRESHOLD = 0.45
+LO_THRESHOLD = 0.10
 
 #How many images to go through before saving to count.pickle
 BUFFER_SIZE = 1000000
@@ -24,7 +24,7 @@ class Logger:
         self.count = 0
         self.buffer = 0
 
-        now=datetime.datetime.now()
+        now=str(datetime.datetime.now()).replace(" ", "_")
         self.log_folder = f"logs/{now}"
         os.makedirs(self.log_folder)
 
@@ -62,6 +62,7 @@ class Logger:
     async def log_anomalies(self, chunk, outputs):
         for idx, prediction in enumerate(outputs):
             real_certainty = prediction[0]
+            print(real_certainty)
 
             if real_certainty >= HI_THRESHOLD:
                 image_path = self.save_image(chunk[idx], "BINGO")

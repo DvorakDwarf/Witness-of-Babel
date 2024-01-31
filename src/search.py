@@ -40,14 +40,14 @@ HQ = logger.Logger(bot=False)
 
 async def search():
     while True:
-        print("ready")
+        print("Ready")
 
         while True:
             chunk = noisegen.generate_chunk(CHUNK_SIZE).to(device)
             outputs = witness(chunk)
 
             # #Uncomment to visualize data
-            # plt.imshow(chunk[0].cpu().reshape(32, 32, 1))
+            # plt.imshow(chunk[0].cpu().reshape(IMAGE_SIZE, IMAGE_SIZE, 1))
             # plt.show()
             
             await HQ.log_anomalies(chunk, outputs)

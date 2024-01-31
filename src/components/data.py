@@ -9,7 +9,7 @@ import numpy as np
 
 BATCH_SIZE = 64
 DATA_WORKERS = 0
-DATASET_DIR = "/home/titleless/m2/datasets/tiny-imagenet/"
+DATASET_DIR = "tiny-imagenet-200" #Local path example
 
 #[1., 0.] = Real image
 #[0., 1.] = Noise
